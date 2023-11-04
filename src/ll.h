@@ -9,6 +9,7 @@ Functions include:
     3. Display
     4. Reverse
     5. Sort (Ascending, Descending)
+    6. Position Access
 To use this template
        Create a node using node* (variable name) and point it to null.
        node* var = NULL;
@@ -20,6 +21,7 @@ To use this template
     reverse(&(head node variable));
     asc_sort(&(head node variable));
     desc_sort(&(head node variable));
+
 */
 
 typedef struct node
@@ -135,3 +137,21 @@ void desc_sort(node **head_ref)
         }
     }
 }
+
+int element(node **head_ref, int pos)
+{
+    node *temp = *head_ref;
+    int i = 0;
+    
+    while(temp != NULL)
+    {
+        if (pos == i)
+        {
+            return temp->data;
+        }
+        temp = temp->next;
+        i++;
+    }
+    return 0;    
+}
+

@@ -22,4 +22,8 @@ int main()
     printf("Sorting Now: \n");
     asc_sort(&newlist);
     display(&newlist);
+    int pos;
+    scanf("%d", pos);
+    int x = element(&newlist, pos);
+    printf("The Element: %d", x);
 }
