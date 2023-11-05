@@ -4,12 +4,13 @@
 /*
 Standard Template for creating a Linked List quicky.  Credit: Debasis Sidkar
 Functions include:
-    1. Insertion (Head and Tail)
-    2. Deletion
+    1. Insertion (Head and Tail, at any point)
+    2. Deletion (any point, element to delete)
     3. Display
     4. Reverse
     5. Sort (Ascending, Descending)
     6. Position Access
+
 To use this template
        Create a node using node* (variable name) and point it to null.
        node* var = NULL;
@@ -55,18 +56,15 @@ void insert(node **head_ref, int new_data)
     {
         last = last->next;
     }
-
     last->next = new_node;
 }
 
 void del_node(node **head_ref, int del)
 {
     node *temp = *head_ref, *prev;
-
     if (temp != NULL && temp->data == del)
     {
         *head_ref = temp->next;
-        free(temp);
         return;
     }
     while (temp != NULL && temp->data != del)
@@ -77,7 +75,6 @@ void del_node(node **head_ref, int del)
     if (temp == NULL)
         return;
     prev->next = temp->next;
-    free(temp);
 }
 
 void display(node **head_ref)
@@ -183,4 +180,63 @@ int element(node **head_ref, int pos)
 
     free(temp);
     return 0;
+}
+void insert_pos(node **head_ref, int pos, int new_data)
+{
+    node *temp = *head_ref;
+    node *new_node = (node *)malloc(sizeof(node));
+    new_node->data = new_data;
+    new_node->next = NULL;
+
+    if (pos == 0)
+    {
+        new_node->next = *head_ref;
+        *head_ref = new_node;
+        return;
+    }
+
+    for (int i = 0; temp != NULL && i < pos - 1; i++)
+    {
+        temp = temp->next;
+    }
+
+    if (temp == NULL)
+    {
+        printf("Position out of bounds");
+        return;
+    }
+
+    new_node->next = temp->next;
+    temp->next = new_node;
+}
+
+void del_pos(node **head_ref, int pos)
+{
+    if (*head_ref == NULL)
+        return;
+
+    node *temp = *head_ref;
+
+    if (pos == 0)
+    {
+        *head_ref = temp->next;
+        free(temp);
+        return;
+    }
+
+    for (int i = 0; temp != NULL && i < pos - 1; i++)
+    {
+        temp = temp->next;
+    }
+
+    if (temp == NULL || temp->next == NULL)
+    {
+        printf("Position out of bounds");
+        return;
+    }
+
+    node *next = temp->next->next;
+
+    free(temp->next);
+    temp->next = next;
 }
