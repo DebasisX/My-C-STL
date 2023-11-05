@@ -23,7 +23,7 @@ int main()
     asc_sort(&newlist);
     display(&newlist);
     int pos;
-    scanf("%d", pos);
+    scanf("%d", &pos);
     int x = element(&newlist, pos);
     printf("The Element: %d", x);
 }
