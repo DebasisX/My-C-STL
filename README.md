@@ -1,3 +1,7 @@
+# Added support for creating advanced Graphs.
+functionalities for the same will be added soon.
+
+
 # Linked-List-C-Library
 Just #include "ll.h" and you're good to go.
 
