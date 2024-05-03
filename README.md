@@ -1,5 +1,6 @@
 # Added support for creating advanced Graphs.
-functionalities for the same will be added soon.
+DFS implemented, insertion removal implemented.
+more functionalities will be added soon.
 
 
 # Linked-List-C-Library
