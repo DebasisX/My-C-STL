@@ -13,11 +13,15 @@ typedef struct graph
     int num; // No. of edges.
     int *edges; // Pointer to the array of edges.
 } graph;
-int arr[];
+int *arr;
 int initial = 0;
 void alloc_visited(int n)
 {  
-    arr[n] = malloc(sizeof(int) * n);
+    arr = malloc(sizeof(int) * n);
+}
+void dealloc_visited()
+{
+  free(arr);
 }
 
 graph* insert(int id, void* vertice, int num, int arr[]) // Pass in Vertice can be Character, Integer, String or any Custom Data Type 
@@ -43,12 +47,7 @@ void freeG(graph* x[], int edges) // Pass in pointer to graph and no. of edges t
     }
     // All memory will be freed including the pointer to the graph.
 }
-bool cyclic(graph** x, int num)
-{
-    // vertices can be accessed by x[i]->edges[j]  where x[i] is the vertice and x->edges[j] are the vertices. and num is the number of vertices 
-    // and x->num is the no. of edges associated with the vertice x[i].
-    return false;
-}
+
 void dfs(graph** x, int num, int id) // Don't try to understand, it was pure instinct as I have never looked at generalised algorithms
 // these algorithms are made by me without reference so ignore if there is something off but be sure it gets the job done correctly. 
 {
@@ -67,7 +66,7 @@ void dfs(graph** x, int num, int id) // Don't try to understand, it was pure ins
     for(int i = 0; i < num; i++) // index of vertice
     {
         for(int j = 0; j < x[i]->num; j++) // edges
-        {
+        { // If already in the array just say cycle is present and terminate.
             if (x[i]->id == id){
                 visited[i][j] = 1;
             }
@@ -106,9 +105,86 @@ void dfs(graph** x, int num, int id) // Don't try to understand, it was pure ins
                     initial++;
                     dfs(x, num, id);
                 }
-                
             }
         }  
     }
 }
-
+int cyclic(graph** x, int num, int id) // Don't try to understand, it was pure instinct as I have never looked at generalised algorithms
+// these algorithms are made by me without reference so ignore if there is something off but be sure it gets the job done correctly.
+{     
+  int total = 0;     
+  for(int i = 0; i < num; i++)     
+  {
+    total += x[i]->num;     
+  }     
+  int visited[num][total];     
+  for (int i = 0; i < num; i++) 
+  {     
+    for (int j = 0; j < total; j++) 
+    {                 
+        visited[i][j] = 0;              // Assignning the visited array with 0's 
+                          
+    }     
+  }         
+  for(int i = 0; i < num; i++) // index of vertice    
+  {         
+    for(int j = 0; j < x[i]->num; j++) // edges  
+    {                         
+      if (x[i]->id == id)
+      {             
+        visited[i][j] = 1;             // Assignning the visited array with 1 where the ID is same.
+      }                     
+    }
+  }     
+  for(int i = 0; i < num; i++) // index of vertice   
+  {   
+    for(int temp = 0; temp < initial; temp++) 
+    {
+      if (arr[temp] == x[i]->id)
+      {
+        printf("ID: %d  ARR[TEMP]: %d\n", id, arr[temp]);
+        return id;
+      }
+    }
+    for(int j = 0; j < x[i]->num; j++) // edges    
+        {             
+          if (visited[i][j] == 1)             
+          {
+                          
+              arr[initial] = x[i]->id;
+              initial++;
+          }
+        }
+    }
+  
+      
+  for(int i = 0; i < num; i++) // index of vertice    
+  {         
+    for(int j = 0; j < x[i]->num; j++) // edges   
+    {             
+      if (visited[i][j] == 1)             
+      {                 
+        id = x[i]->edges[j];                 
+        int z = 0;                 
+        for(int temp = 0; temp < initial; temp++)                 
+        {                     
+          if (arr[temp] == id)                     
+          {                         
+            z++;                     
+          }                 
+        }                 
+        if(z == 0)                 
+        {                     
+          arr[initial] = x[i]->edges[j];                    
+          initial++;                     
+          int y = cyclic(x, num, id);                     
+          return y; // It is not cyclic. False.
+        }
+      }
+    }
+  }
+}
+void dijkstra(graph **x, int num, int sourc, int dest)
+{
+  // Final Function for this Library.
+}
