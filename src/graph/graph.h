@@ -5,7 +5,6 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-// To be used by someone who has some expertise with memory allocation and graphs.
 typedef struct graph 
 {
     int id; // ID for the vertice.
@@ -48,7 +47,7 @@ void freeG(graph* x[], int edges) // Pass in pointer to graph and no. of edges t
     // All memory will be freed including the pointer to the graph.
 }
 
-void dfs(graph** x, int num, int id) // Don't try to understand, it was pure instinct as I have never looked at generalised algorithms
+void dfs(graph** x, int num, int id) 
 // these algorithms are made by me without reference so ignore if there is something off but be sure it gets the job done correctly. 
 {
     int total = 0;
@@ -109,7 +108,7 @@ void dfs(graph** x, int num, int id) // Don't try to understand, it was pure ins
         }  
     }
 }
-int cyclic(graph** x, int num, int id) // Don't try to understand, it was pure instinct as I have never looked at generalised algorithms
+int cyclic(graph** x, int num, int id) 
 // these algorithms are made by me without reference so ignore if there is something off but be sure it gets the job done correctly.
 {     
   int total = 0;     
@@ -184,7 +183,56 @@ int cyclic(graph** x, int num, int id) // Don't try to understand, it was pure i
     }
   }
 }
-void dijkstra(graph **x, int num, int sourc, int dest)
-{
-  // Final Function for this Library.
+// Function to map graph IDs to array indices
+int find_index(graph **x, int num, int id) {
+  for (int i = 0; i < num; i++) {
+      if (x[i]->id == id) {
+          return i;
+      }
+  }
+  return -1;
+}
+
+int* dijkstra(graph **x, int num, int source_id) {
+  int* dist = (int*)malloc(num * sizeof(int));
+  int visited[num];
+  
+  for (int i = 0; i < num; i++) {
+      dist[i] = INT_MAX;
+      visited[i] = 0;
+  }
+  
+  int source = find_index(x, num, source_id);
+  if (source == -1) {
+      printf("Source ID not found in graph.\n");
+      free(dist);
+      return NULL;
+  }
+  
+  dist[source] = 0;
+  
+  for (int count = 0; count < num - 1; count++) {
+      int min = INT_MAX, min_index = -1;
+      
+      for (int v = 0; v < num; v++) {
+          if (!visited[v] && dist[v] <= min) {
+              min = dist[v];
+              min_index = v;
+          }
+      }
+      
+      if (min_index == -1) break;
+      
+      int u = min_index;
+      visited[u] = 1;
+      
+      for (int i = 0; i < x[u]->num; i++) {
+          int v_index = find_index(x, num, x[u]->edges[i]);
+          if (v_index != -1 && !visited[v_index] && dist[u] != INT_MAX && dist[u] + 1 < dist[v_index]) {
+              dist[v_index] = dist[u] + 1;
+          }
+      }
+  }
+  
+  return dist;
 }
