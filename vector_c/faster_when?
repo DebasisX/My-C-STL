@@ -1,0 +1,7 @@
+| Scenario                                                 | Performance Gain? | Why                                                                                          |
+| -------------------------------------------------------- | ----------------- | -------------------------------------------------------------------------------------------- |
+| 🚀 Tight loops, large vectors                            | ✅ Yes             | Assembly functions skip C's overhead and are written with CPU-level memory access patterns. |
+| 📉 CPU-bound operations                                  | ✅ Possibly        | Especially when vector operations dominate the workload.                                    |
+| 🔁 Repeated `insert`, `delete`, `search` on large arrays | ✅ Measurable      | Because you're avoiding function call overhead and standard library indirection.            |
+| 🪛 You're using SIMD (`xmm`, `ucomisd`, etc.)            | ✅ Definitely      | SIMD can boost floating point comparisons and moves.                                        |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
