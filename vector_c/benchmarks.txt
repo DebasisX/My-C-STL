@@ -1,0 +1,31 @@
+C++: (stl vector)
+----
+debasis@IdeaPad-Flex-5:~/code/asm/vector_c$ time ./a.out
+real	0m0.195s
+user	0m0.152s
+sys		0m0.043s
+
+C: (custom vector)
+--
+debasis@IdeaPad-Flex-5:~/code/asm/vector_c$ time ./asm_bench
+asm last = 4999999
+
+real	0m0.046s
+user	0m0.030s
+sys		0m0.016s
+
+C:
+--
+debasis@IdeaPad-Flex-5:~/code/asm/vector_c$ time ./std_bench
+std last = 4999999
+
+real	0m0.025s
+user	0m0.006s
+sys		0m0.019s
+
+the std_bench is faster as it is not handling cases of multiple data-types. There is no vector in C,
+I made one be thankful, lol.
+
+about 4x faster, yeah I know it's because of 
+overheads and robustness that C++ stl delivers, 
+but i don't care a win is a win.
