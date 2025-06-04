@@ -1,4 +1,5 @@
 # Added support for blazing fast vectors! 4x better runtime than C++ STL.
+insert, search, get, delete.
 
 # Added support for creating advanced Graphs.
 DFS implemented, insertion removal implemented, Dijkstra also!.
