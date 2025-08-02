@@ -7,9 +7,9 @@ sudo apt install nasm gcc
 sudo apt install gcc-multilib g++-multilib libc6-dev-i386 
 
 to build or edit and run the asm
-	nasm -f elf64 vector.asm -o vector_asm.o 
+	nasm -f elf64 vector.asm -o vector.o 
 compile:
-	gcc -O2 -std=c11 asm_vector_benchmark.c vector.o vector_asm.o -o asm_bench
+	gcc -O3 -march=native {output.c} vector.c vector.o -o {output} -> this output is your filename
 or edit in make: (below is for my naming convention)
 	make clean (if previosly built and changed)
 	make
